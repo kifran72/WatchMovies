@@ -1,0 +1,49 @@
+{
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "functions": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "firebase-debug.log",
+      "**/.*",
+      "**/node_modules/**",
+      "components/**",
+      "helpers/**",
+      "pages/**",
+      "public/**",
+      "firestore.rules",
+      "readme.md"
+    ],
+    "runtime": "nodejs14"
+  },
+  "hosting": [
+    {
+      "site": "test-7b8b7",
+      "public": "out/",
+      "cleanUrls": true,
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "nextjs-server"
+        }
+      ]
+    }
+  ]
+}

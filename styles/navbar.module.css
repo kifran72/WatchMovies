@@ -1,0 +1,94 @@
+.navbar {
+    position: absolute !important;
+    height: 5rem;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.navFixed {
+    position: fixed !important;
+    top: 0 !important;
+    background: transparent !important;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.navbar button {
+    color: #fff;
+    /* width: 100%; */
+    height: 100%;
+    font-size: 16px;
+    color: #222222;
+    line-height: 32px;
+    font-weight: 600;
+    opacity: 1;
+    letter-spacing: 0.5px;
+    font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase;
+    background: transparent !important;
+    margin-right: 2rem;
+}
+
+.navFixed button {
+    color: #fff;
+    /* width: 100%; */
+    height: 100%;
+    font-size: 16px;
+    color: #222222;
+    line-height: 32px;
+    font-weight: 600;
+    opacity: 1;
+    padding: 25px 0px;
+    letter-spacing: 0.5px;
+    font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase;
+    margin-right: 2rem;
+}
+
+.link:hover {
+    color: #dc1a28 !important;
+    background-color: transparent !important;
+}
+
+.button:focus {
+    color: #dc1a28;
+    background-color: transparent !important;
+}
+
+.listeButton {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    background-color: #141414 !important;
+    border-radius: 5px;
+    box-shadow: 0 0 8px #141414 !important;
+}
+
+.linked {
+    color: #dc1a28 !important;
+    background-color: transparent !important;
+}
+
+.link {
+    color: #fff !important;
+}
+
+.logo {
+    object-fit: contain;
+    width: 5rem;
+    margin-left: 2rem;
+}
+
+@media (max-width: 400px) {
+    .link {
+        font-size: 12px !important;
+    }
+    .linked {
+        font-size: 12px !important;
+    }
+}

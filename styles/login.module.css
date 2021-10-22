@@ -1,0 +1,17 @@
+.container {}
+
+.form {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form h1 {
+    margin-bottom: 2rem;
+}
+
+.logo {
+    object-fit: none;
+    margin-bottom: 5rem;
+}
