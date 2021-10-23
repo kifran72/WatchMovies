@@ -1,4 +1,7 @@
 import dynamic from "next/dynamic";
+import useSWR from "swr";
+import { useState } from "react";
+
 const Head = dynamic(() => import("next/head"));
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@utils/firebase";
@@ -23,21 +26,30 @@ const ElevationScroll = dynamic(() =>
   import("@components/styles/elevationScroll")
 );
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const Home = (props) => {
   const [user] = useAuthState(auth);
-  const router = useRouter();
-  const movies = props.data;
+  // const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
+  const router = useRouter();
+  const { data } = useSWR("/api/movies", fetcher);
+  const movies = data;
+
+  useEffect(async () => {
     if (!user) {
       router.push("/login");
+    } else {
+      // const data = await getMoviesFromFirebase();
+      // console.log(data);
+      // setMovies(data);
     }
   });
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Accueil</title>
+        <title>Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="icon" href="/IconOnglet.jpg" />
       </Head>
@@ -47,16 +59,23 @@ const Home = (props) => {
       <Toolbar id="back-to-top-anchor" />
       <Background user={user} />
       <div className={styles.wrapper}>
-        {movies.map((movie, key) => (
-          <div className={styles.item} key={key}>
-            <img src={movie.image.medium} alt="" /> <br />
-            <h1>{movie.name}</h1>
-            <h1>Types</h1>
-            {movie.genres.map((genre, keyGenre) => (
-              <p key={keyGenre}>{genre}</p>
-            ))}
-          </div>
-        ))}
+        {movies !== undefined ? (
+          movies.map((movie, key) => (
+            <div className={styles.item} key={key}>
+              <a target="_blank" href={movie.url} rel="noreferrer">
+                <img src={movie.image.medium} alt="" width={200} height={250} />
+              </a>{" "}
+              <br />
+              <h1>{movie.name}</h1>
+              <h1>Types</h1>
+              {movie.genres.map((genre, keyGenre) => (
+                <p key={keyGenre}>{genre}</p>
+              ))}
+            </div>
+          ))
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
       <ScrollTop {...props}>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
@@ -68,17 +87,3 @@ const Home = (props) => {
 };
 
 export default Home;
-
-export async function getStaticProps(context) {
-  const getData = await fetch(`https://api.tvmaze.com/shows`);
-  const data = await getData.json();
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { data }, // will be passed to the page component as props
-  };
-}

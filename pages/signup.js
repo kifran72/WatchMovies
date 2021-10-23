@@ -1,12 +1,10 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-
 const Head = dynamic(() => import("next/head"));
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { auth } from "@utils/firebase";
+import { auth, defaultSignup } from "@utils/firebase";
 
 //Styles
 import styles from "@css/login.module.css";
@@ -21,15 +19,18 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   LoginForm: {
     "& > *": {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
       width: "15rem",
       display: "flex",
       flexDirection: "column",
     },
+    backgroundColor: "#383838",
+    borderRadius: "11px",
   },
   LoginButton: {
     marginTop: "1rem",
@@ -44,8 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup = (props) => {
+const Signup = () => {
   const [user] = useAuthState(auth);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const router = useRouter();
   const [values, setValues] = useState({
@@ -53,7 +55,10 @@ const Signup = (props) => {
     password: "",
     confirmPassword: "",
     showPassword: false,
+    showPasswordConfirm: false,
   });
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -61,6 +66,9 @@ const Signup = (props) => {
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
+  };
+  const handleClickShowPasswordConfirm = () => {
+    setValues({ ...values, showPasswordConfirm: !values.showPasswordConfirm });
   };
 
   const handleMouseDownPassword = (event) => {
@@ -73,6 +81,31 @@ const Signup = (props) => {
     }
   });
 
+  const getSignup = async () => {
+    if (
+      values.email === "" ||
+      values.password === "" ||
+      values.confirmPassword === ""
+    ) {
+      enqueueSnackbar("Please insert your informations");
+    } else if (values.password !== values.confirmPassword) {
+      enqueueSnackbar("Password not match");
+    } else {
+      const signed = await defaultSignup(values.email, values.password);
+      if (signed.errorCode === undefined) {
+        router.push("/");
+      } else {
+        if (signed.errorCode.errorCode === "auth/invalid-email") {
+          enqueueSnackbar("Please use a correct email");
+        }
+
+        if (signed.errorCode.errorCode === "auth/weak-password") {
+          enqueueSnackbar("Password is to weak");
+        }
+      }
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -82,7 +115,6 @@ const Signup = (props) => {
       </Head>
       <div className={styles.form}>
         <img
-          className={styles.logo}
           src="/Netflux.png"
           alt="Grapefruit slice atop a pile of other slices"
         />
@@ -98,7 +130,7 @@ const Signup = (props) => {
               id="standard-adornment-email"
               color="secondary"
               type={"text"}
-              value={values.password}
+              value={values.email}
               onChange={handleChange("email")}
             />
           </FormControl>
@@ -129,26 +161,33 @@ const Signup = (props) => {
             />
           </FormControl>
           <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password" color="secondary">
+            <InputLabel
+              htmlFor="outlined-adornment-confirmPassword"
+              color="secondary"
+            >
               Confirm password
             </InputLabel>
 
             <OutlinedInput
               labelWidth={132}
-              id="standard-adornment-password"
+              id="standard-adornment-confirmPassword"
               color="secondary"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
+              type={values.showPasswordConfirm ? "text" : "password"}
+              value={values.confirmPassword}
               onChange={handleChange("confirmPassword")}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     color="secondary"
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
+                    onClick={handleClickShowPasswordConfirm}
                     onMouseDown={handleMouseDownPassword}
                   >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    {values.showPasswordConfirm ? (
+                      <Visibility />
+                    ) : (
+                      <VisibilityOff />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
@@ -160,6 +199,7 @@ const Signup = (props) => {
           variant="contained"
           color="secondary"
           className={classes.SignupButton}
+          onClick={getSignup}
         >
           Signup
         </Button>

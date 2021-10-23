@@ -1,55 +1,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 html,
 body {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    text-size-adjust: 80%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  text-size-adjust: 80%;
 }
 
 body::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
+  width: 10px;
+  background-color: transparent;
 }
 
 body::-webkit-scrollbar-track {
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px; */
-    background-color: transparent;
+  background-color: transparent;
 }
 
 body::-webkit-scrollbar-thumb {
-    /* border-radius: 10px; */
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
-    background-color: #dc1a28;
+  /* border-radius: 10px; */
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+  background-color: #dc1a28;
 }
 
 #__next {
-    height: 100%;
+  height: 100%;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-
-/* Custom FullCalendar */
-
-.fc-daygrid-day-frame:hover {
-    cursor: pointer !important;
-}
+/* Custom Matérial */
+/* .MuiOutlinedInput-notchedOutline {
+  border-color: #dc1a28 !important;
+} */
 
 @media (max-width: 641px) {
-    .fc .fc-toolbar.fc-header-toolbar {
-        flex-direction: column-reverse !important;
-    }
-    .fc-toolbar-chunk {
-        margin: 0.5rem;
-    }
+  .fc .fc-toolbar.fc-header-toolbar {
+    flex-direction: column-reverse !important;
+  }
+  .fc-toolbar-chunk {
+    margin: 0.5rem;
+  }
 }

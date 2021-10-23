@@ -1,6 +1,5 @@
 import FirebaseConfig from "../firebaseConfig";
 import { initializeApp } from "firebase/app";
-
 import {
   getAuth,
   signInWithPopup,
@@ -53,4 +52,4 @@ const logout = () => {
   signOut(auth);
 };
 
-export { loginGoogle, logout, auth };
+export { loginGoogle, logout };

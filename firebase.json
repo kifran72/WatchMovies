@@ -18,6 +18,7 @@
   },
   "functions": {
     "source": ".",
+    "predeploy": ["npm install", "npm run build"],
     "ignore": [
       "firebase.json",
       "firebase-debug.log",
@@ -36,12 +37,40 @@
     {
       "site": "test-7b8b7",
       "public": "out/",
-      "cleanUrls": true,
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
           "source": "**",
-          "function": "nextjs-server"
+          "function": "nextServer"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=7200"
+            }
+          ]
+        },
+        {
+          "source": "404.html",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=300"
+            }
+          ]
         }
       ]
     }

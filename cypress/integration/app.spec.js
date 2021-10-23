@@ -1,17 +1,10 @@
-describe("Navigation", () => {
-  it("should navigate to the about page", () => {
+describe("WachMovies", () => {
+  it("should navigate to the login page", () => {
     // Start from the index page
     cy.visit("http://localhost:3000/");
-    cy.visit("http://localhost:3000/api/movies");
-    cy.visit("http://localhost:3000/api/movies/girl");
-
-    //   // Find a link with an href attribute containing "about" and click it
-    //   cy.get('a[href*="about"]').click()
-
-    //   // The new url should include "/about"
-    //   cy.url().should('include', '/about')
-
-    //   // The new page should contain an h1 with "About page"
-    //   cy.get('h1').contains('About Page')
+  });
+  it("should get api data", () => {
+    // Start from the index page
+    cy.get(".wrapper>.item").children().should("have.length");
   });
 });

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { login, logout } from "@utils/auth/google";
 const Link = dynamic(() => import("next/link"));
@@ -25,9 +24,9 @@ const Navbar = (props) => {
     <AppBar className={trigger ? styles.navFixed : styles.navbar}>
       <div className={styles.listeButton}>
         <img
-          className={styles.logo}
           src="/Netflux.png"
           alt="Grapefruit slice atop a pile of other slices"
+          width={140}
         />
         {/* <Button className={styles.link}>Category</Button> */}
         <Link href="/login">
