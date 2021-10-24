@@ -17,9 +17,10 @@ function runMiddleware(req, res, fn) {
 
 async function handler(req, res) {
   // Run the middleware
-  await runMiddleware(req, res, cors);
+  // await runMiddleware(req, res, cors);
   const getData = await fetch(`https://api.tvmaze.com/shows`);
   const data = await getData.json();
+
   res.status(200).json(data);
 }
 

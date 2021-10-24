@@ -36,13 +36,9 @@ const Home = (props) => {
   const { data } = useSWR("/api/movies", fetcher);
   const movies = data;
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!user) {
       router.push("/login");
-    } else {
-      // const data = await getMoviesFromFirebase();
-      // console.log(data);
-      // setMovies(data);
     }
   });
 
